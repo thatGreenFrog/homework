@@ -18,6 +18,10 @@ public class PlaySite {
     @JoinColumn(name = "play_site_id")
     private Set<PlaySiteAttraction> playSiteAttractions;
 
+    @OneToMany
+    @JoinColumn(name = "play_site_id")
+    private Set<PlaySiteKid> playSiteKids;
+
     public PlaySite() {
     }
 

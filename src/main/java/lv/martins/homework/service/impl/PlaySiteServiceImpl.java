@@ -1,14 +1,20 @@
 package lv.martins.homework.service.impl;
 
 import lv.martins.homework.exceptions.ConflictException;
+import lv.martins.homework.repository.KidRepository;
 import lv.martins.homework.repository.PlaySiteAttractionRepository;
+import lv.martins.homework.repository.PlaySiteKidRepository;
 import lv.martins.homework.repository.PlaySiteRepository;
+import lv.martins.homework.repository.entities.Kid;
 import lv.martins.homework.repository.entities.PlaySite;
 import lv.martins.homework.repository.entities.PlaySiteAttraction;
+import lv.martins.homework.repository.entities.PlaySiteKid;
 import lv.martins.homework.service.PlaySiteService;
 import lv.martins.homework.service.dto.AttractionDTO;
 import lv.martins.homework.service.dto.AttractionType;
+import lv.martins.homework.service.dto.KidDTO;
 import lv.martins.homework.service.dto.PlaySiteDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +22,23 @@ import java.util.List;
 @Service
 public class PlaySiteServiceImpl implements PlaySiteService {
 
-    private PlaySiteRepository playSiteRepository;
+    private final PlaySiteRepository playSiteRepository;
 
-    private PlaySiteAttractionRepository playSiteAttractionRepository;
+    private final PlaySiteAttractionRepository playSiteAttractionRepository;
 
-    public PlaySiteServiceImpl(PlaySiteRepository playSiteRepository, PlaySiteAttractionRepository playSiteAttractionRepository) {
+    private final KidRepository kidRepository;
+
+    private final PlaySiteKidRepository playSiteKidRepository;
+
+    @Autowired
+    public PlaySiteServiceImpl(PlaySiteRepository playSiteRepository,
+                               PlaySiteAttractionRepository playSiteAttractionRepository,
+                               KidRepository kidRepository,
+                               PlaySiteKidRepository playSiteKidRepository) {
         this.playSiteRepository = playSiteRepository;
         this.playSiteAttractionRepository = playSiteAttractionRepository;
+        this.kidRepository = kidRepository;
+        this.playSiteKidRepository = playSiteKidRepository;
     }
 
     @Override

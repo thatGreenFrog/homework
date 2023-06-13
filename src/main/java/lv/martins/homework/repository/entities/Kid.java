@@ -15,6 +15,10 @@ public class Kid {
     @Column(name = "ticket_number")
     private String ticketNumber;
 
+    @OneToOne
+    @JoinColumn(name = "id")
+    private PlaySiteKid playSite;
+
     private Integer age;
 
     public Long getId() {
@@ -47,5 +51,13 @@ public class Kid {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public PlaySiteKid getPlaySite() {
+        return playSite;
+    }
+
+    public void setPlaySite(PlaySiteKid playSite) {
+        this.playSite = playSite;
     }
 }

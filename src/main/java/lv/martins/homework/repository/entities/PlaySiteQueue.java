@@ -16,6 +16,8 @@ public class PlaySiteQueue {
     @Column(name = "play_site_id")
     public Long playSiteId;
 
+
+
     public Long getId() {
         return id;
     }
