@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "6fd1aa92-3de9-4729-b92c-b29340295165",
+		"name": "Swedbank homework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13187232"
+	},
+	"item": [
+		{
+			"name": "POST /playSite",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Test play site 1\",\n    \"attractions\":[\n        {\n            \"attractionType\":\"DOUBLE_SWING\",\n            \"size\": 5\n        },\n        {\n            \"attractionType\":\"SLIDE\",\n            \"size\": 5\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/playSite",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playSite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /playSite",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "GET /playSite/{playSiteId}",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "POST playSite/{playSiteId}/kid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Jhon Doe\",\n    \"age\":10,\n    \"ticketNumber\":\"T123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/playSite/:playSiteId/kid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playSite",
+						":playSiteId",
+						"kid"
+					],
+					"variable": [
+						{
+							"key": "playSiteId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /kid",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/kid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /kid/{kidId}",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "GET /playSite/{playSiteId}/kid",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /playSite/{playSiteId}/kid/{kidId}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/playSite/:playSiteId/kid/:kidId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playSite",
+						":playSiteId",
+						"kid",
+						":kidId"
+					],
+					"variable": [
+						{
+							"key": "playSiteId",
+							"value": "1"
+						},
+						{
+							"key": "kidId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /playSite/statistics",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
