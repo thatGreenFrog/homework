@@ -11,6 +11,8 @@ public interface KidRepository extends JpaRepository<Kid, Long> {
     Kid findByTicketNumber(String ticketNumber);
 
     @Query("select spotInQueue from Kid order by spotInQueue desc limit 1")
-    Integer findLastSpotInQueue();
+    Integer findNextSpotInQueue();
+
+    Kid findFirstByOrderBySpotInQueueAsc();
 
 }

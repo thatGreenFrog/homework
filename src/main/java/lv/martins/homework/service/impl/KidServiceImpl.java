@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -59,7 +60,7 @@ public class KidServiceImpl implements KidService {
         kidEntity.setTicketNumber(kid.ticketNumber());
         kidEntity.setPlaySiteId(playSiteId);
         if(!spotAvailableOnPlaySite){
-            Integer nextSpotInQueue = kidRepository.findLastSpotInQueue();
+            Integer nextSpotInQueue = kidRepository.findNextSpotInQueue();
             kidEntity.setSpotInQueue(nextSpotInQueue == null ? 1 : nextSpotInQueue + 1);
         }
         kidRepository.saveAndFlush(kidEntity);
@@ -78,5 +79,22 @@ public class KidServiceImpl implements KidService {
         if(kid.isEmpty())
             throw new NotFoundException("Kid does not exist");
         return entityToDtoMapper.apply(kid.get());
+    }
+
+    @Override
+    public void removeKidPromPlaySite(Long playSiteId, Long kidId) throws NotFoundException {
+        Optional<PlaySite> playSite = playSiteRepository.findById(playSiteId);
+        if (playSite.isEmpty())
+            throw new NotFoundException("Play site does not exist");
+
+        Optional<Kid> kid = playSite.get().getKids().stream().filter(k -> Objects.equals(k.getId(), kidId)).findFirst();
+        if(kid.isEmpty())
+            throw new NotFoundException("Kid does not exist in this play site");
+
+        kidRepository.delete(kid.get());
+
+        Kid nextKidInQueue = kidRepository.findFirstByOrderBySpotInQueueAsc();
+        nextKidInQueue.setSpotInQueue(null);
+        kidRepository.saveAndFlush(nextKidInQueue);
     }
 }

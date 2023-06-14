@@ -40,4 +40,11 @@ public class KidController {
         return kidService.findById(kidId);
     }
 
+    @DeleteMapping("/playSite/{playSiteId}/kid/{kidId}")
+    public ResponseEntity<Object> removeKidFromPlaySite(@PathVariable("playSiteId") Long playSiteId,
+                                                        @PathVariable("kidId") Long kidId) throws NotFoundException {
+        kidService.removeKidPromPlaySite(playSiteId, kidId);
+        return ResponseEntity.noContent().build();
+    }
+
 }
