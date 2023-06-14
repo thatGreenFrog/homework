@@ -21,6 +21,9 @@ import java.util.function.Function;
 @Service
 public class PlaySiteServiceImpl implements PlaySiteService {
 
+    /**
+     * Reusable function to map entity to DTO
+     */
     private final Function<PlaySite, PlaySiteDTO> entityToDtoMapper = p -> new PlaySiteDTO(
             p.getId(),
             p.getName(),
@@ -47,6 +50,12 @@ public class PlaySiteServiceImpl implements PlaySiteService {
         this.playSiteAttractionRepository = playSiteAttractionRepository;
     }
 
+    /**
+     * Creates new play site with specified attractions
+     * @param playSiteDTO play site provided in request
+     * @return id of newly created play site
+     * @throws ConflictException is thrown if play site with the same name already exists
+     */
     @Override
     public long createPlaySite(PlaySiteDTO playSiteDTO) throws ConflictException {
         PlaySite playSite = playSiteRepository.findByName(playSiteDTO.name());
@@ -70,6 +79,10 @@ public class PlaySiteServiceImpl implements PlaySiteService {
         return playSite.getId();
     }
 
+    /**
+     *
+     * @return all play sites present in DB
+     */
     @Override
     public List<PlaySiteDTO> getAll() {
         return playSiteRepository.findAll()
@@ -78,6 +91,12 @@ public class PlaySiteServiceImpl implements PlaySiteService {
                 .toList();
     }
 
+    /**
+     *
+     * @param playSiteId play site id provided in request path param
+     * @return play site with provided id
+     * @throws NotFoundException is thrown if play site with specified id doesn't exist
+     */
     @Override
     public PlaySiteDTO findById(Long playSiteId) throws NotFoundException {
         Optional<PlaySite> playSite = playSiteRepository.findById(playSiteId);
@@ -86,6 +105,11 @@ public class PlaySiteServiceImpl implements PlaySiteService {
         return entityToDtoMapper.apply(playSite.get());
     }
 
+    /**
+     * Returns play site statistics: Total kids on all play sites, total kids in queue,
+     * total space available in all play sites, total play site utilization
+     * @return play site statistics
+     */
     @Override
     public PlaySiteStatisticsDTO getPlaySiteStatistics() {
         List<PlaySite> playSites = playSiteRepository.findAll();
