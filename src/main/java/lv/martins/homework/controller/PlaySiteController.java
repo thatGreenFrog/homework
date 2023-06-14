@@ -4,6 +4,7 @@ import lv.martins.homework.exceptions.ConflictException;
 import lv.martins.homework.exceptions.NotFoundException;
 import lv.martins.homework.service.PlaySiteService;
 import lv.martins.homework.service.dto.PlaySiteDTO;
+import lv.martins.homework.service.dto.PlaySiteStatisticsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,11 @@ public class PlaySiteController {
     @GetMapping(path = "/playSite/{playSiteId}")
     public PlaySiteDTO findById(@PathVariable("playSiteId") Long playSiteId) throws NotFoundException {
         return playSiteService.findById(playSiteId);
+    }
+
+    @GetMapping(path = "/playSite/statistics")
+    public PlaySiteStatisticsDTO getPlaySiteStatistics(){
+        return playSiteService.getPlaySiteStatistics();
     }
 
 }

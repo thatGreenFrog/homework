@@ -10,6 +10,7 @@ import lv.martins.homework.service.PlaySiteService;
 import lv.martins.homework.service.dto.AttractionDTO;
 import lv.martins.homework.service.dto.AttractionType;
 import lv.martins.homework.service.dto.PlaySiteDTO;
+import lv.martins.homework.service.dto.PlaySiteStatisticsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +84,29 @@ public class PlaySiteServiceImpl implements PlaySiteService {
         if(playSite.isEmpty())
             throw new NotFoundException("Play site does not exist");
         return entityToDtoMapper.apply(playSite.get());
+    }
+
+    @Override
+    public PlaySiteStatisticsDTO getPlaySiteStatistics() {
+        List<PlaySite> playSites = playSiteRepository.findAll();
+        Long totalPlaySiteSize = playSites.stream()
+                .mapToLong(p -> p.getPlaySiteAttractions()
+                        .stream()
+                        .mapToInt(PlaySiteAttraction::getSize)
+                        .sum())
+                .sum();
+        Long totalKidsOnSites = playSites.stream()
+                .mapToLong(p -> p.getKids().stream()
+                        .filter(k -> k.getSpotInQueue() == null)
+                        .count())
+                .sum();
+        Long totalKidsInQueue = playSites.stream()
+                .mapToLong(p -> p.getKids().stream()
+                        .filter(k -> k.getSpotInQueue() != null)
+                        .count())
+                .sum();
+        Integer totalUtilization = (int)(((double)totalKidsOnSites / (double)totalPlaySiteSize) * 100);
+        return new PlaySiteStatisticsDTO(totalPlaySiteSize, totalKidsOnSites, totalKidsInQueue, totalUtilization);
     }
 
     private Integer calculatePlaySiteUtilization(PlaySite p){
