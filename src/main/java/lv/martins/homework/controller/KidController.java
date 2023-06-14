@@ -40,6 +40,11 @@ public class KidController {
         return kidService.findById(kidId);
     }
 
+    @GetMapping("/playSite/{playSiteId}/kid")
+    public List<KidDTO> findAllKidsByPlaySite(@PathVariable("playSiteId") Long playSiteId) throws NotFoundException {
+        return kidService.findByPlaySiteId(playSiteId);
+    }
+
     @DeleteMapping("/playSite/{playSiteId}/kid/{kidId}")
     public ResponseEntity<Object> removeKidFromPlaySite(@PathVariable("playSiteId") Long playSiteId,
                                                         @PathVariable("kidId") Long kidId) throws NotFoundException {

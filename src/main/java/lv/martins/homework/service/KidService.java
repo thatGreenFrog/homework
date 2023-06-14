@@ -14,6 +14,8 @@ public interface KidService {
 
     KidDTO findById(Long kidId) throws NotFoundException;
 
+    List<KidDTO> findByPlaySiteId(Long playSiteId) throws NotFoundException;
+
     void removeKidPromPlaySite(Long playSiteId, Long kidId) throws NotFoundException;
 
 }

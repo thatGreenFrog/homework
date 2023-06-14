@@ -82,6 +82,14 @@ public class KidServiceImpl implements KidService {
     }
 
     @Override
+    public List<KidDTO> findByPlaySiteId(Long playSiteId) throws NotFoundException {
+        Optional<PlaySite> playSite = playSiteRepository.findById(playSiteId);
+        if(playSite.isEmpty())
+            throw new NotFoundException("Play site does not exist");
+        return playSite.get().getKids().stream().map(entityToDtoMapper).toList();
+    }
+
+    @Override
     public void removeKidPromPlaySite(Long playSiteId, Long kidId) throws NotFoundException {
         Optional<PlaySite> playSite = playSiteRepository.findById(playSiteId);
         if (playSite.isEmpty())
