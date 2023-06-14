@@ -6,6 +6,8 @@ public record KidDTO(
         long id,
         @NotNull String name,
         @NotNull int age,
-        @NotNull String ticketNumber
+        @NotNull String ticketNumber,
+        long playSiteId,
+        boolean waitingInQueue
 ) {
 }

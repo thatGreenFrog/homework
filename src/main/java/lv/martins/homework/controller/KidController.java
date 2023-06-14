@@ -1,16 +1,15 @@
 package lv.martins.homework.controller;
 
-import lv.martins.homework.exceptions.ConflictException;
 import lv.martins.homework.exceptions.CustomException;
+import lv.martins.homework.exceptions.NotFoundException;
 import lv.martins.homework.service.KidService;
 import lv.martins.homework.service.dto.KidDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.List;
 
 @RestController
 public class KidController {
@@ -29,6 +28,16 @@ public class KidController {
                 .buildAndExpand(kidService.addKidToPlaySite(kid, playSiteId))
                 .toUri())
                 .build();
+    }
+
+    @GetMapping("/kid")
+    public List<KidDTO> findAllKids(){
+        return kidService.findAllKids();
+    }
+
+    @GetMapping("/kid/{kidId}")
+    public KidDTO findById(@PathVariable("kidId") Long kidId) throws NotFoundException {
+        return kidService.findById(kidId);
     }
 
 }

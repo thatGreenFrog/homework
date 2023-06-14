@@ -12,10 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 public class KidServiceImpl implements KidService {
+
+    private final Function<Kid, KidDTO> entityToDtoMapper = entity -> new KidDTO(entity.getId(), entity.getName(), entity.getAge(),
+            entity.getTicketNumber(), entity.getPlaySiteId(), entity.getSpotInQueue() != null);
 
     private final KidRepository kidRepository;
 
@@ -60,5 +65,18 @@ public class KidServiceImpl implements KidService {
         kidRepository.saveAndFlush(kidEntity);
 
         return kidEntity.getId();
+    }
+
+    @Override
+    public List<KidDTO> findAllKids() {
+        return kidRepository.findAll().stream().map(entityToDtoMapper).toList();
+    }
+
+    @Override
+    public KidDTO findById(Long kidId) throws NotFoundException {
+        Optional<Kid> kid = kidRepository.findById(kidId);
+        if(kid.isEmpty())
+            throw new NotFoundException("Kid does not exist");
+        return entityToDtoMapper.apply(kid.get());
     }
 }
