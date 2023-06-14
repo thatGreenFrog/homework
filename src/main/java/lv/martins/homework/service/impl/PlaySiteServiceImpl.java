@@ -31,7 +31,8 @@ public class PlaySiteServiceImpl implements PlaySiteService {
                                     pa.getSize()
                             )
                     )
-                    .toList()
+                    .toList(),
+            calculatePlaySiteUtilization(p)
     );
 
     private final PlaySiteRepository playSiteRepository;
@@ -84,5 +85,16 @@ public class PlaySiteServiceImpl implements PlaySiteService {
         return entityToDtoMapper.apply(playSite.get());
     }
 
+    private Integer calculatePlaySiteUtilization(PlaySite p){
+        if(p.getPlaySiteAttractions().stream().anyMatch(a -> !a.getType().equals(AttractionType.DOUBLE_SWING.name()))) {
+            return (int)(((double) p.getKids().size() / (double) p.getPlaySiteAttractions().stream().mapToInt(PlaySiteAttraction::getSize).sum()) * 100);
+        }
+        else if (p.getKids().size() < p.getPlaySiteAttractions().stream().mapToInt(PlaySiteAttraction::getSize).sum()) {
+            return 0;
+        }
+        else{
+            return 100;
+        }
+    }
 
 }
