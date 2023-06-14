@@ -1,6 +1,8 @@
 package lv.martins.homework.controller.advice;
 
 import lv.martins.homework.exceptions.ConflictException;
+import lv.martins.homework.exceptions.CustomException;
+import lv.martins.homework.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,9 +14,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ExceptionResponseModel handleGenericException(Exception e){
-        return new ExceptionResponseModel(e.getMessage(), 5001);
+    public ResponseEntity<ExceptionResponseModel> handleGenericException(Exception e){
+        return ResponseEntity.internalServerError().body(new ExceptionResponseModel(e.getMessage(), 5001));
     }
 
     @ExceptionHandler(ConflictException.class)
@@ -27,6 +28,16 @@ public class ControllerExceptionHandler {
                         .toUri()
                         .toString())
                 .body(new ExceptionResponseModel(e.getMessage(), e.getCode()));
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ExceptionResponseModel> handleNotFoundException(NotFoundException e){
+        return ResponseEntity.status(404).body(new ExceptionResponseModel(e.getMessage(), e.getCode()));
+    }
+
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ExceptionResponseModel> handleCustomException(CustomException e){
+        return ResponseEntity.badRequest().body(new ExceptionResponseModel(e.getMessage(), e.getCode()));
     }
 
 }

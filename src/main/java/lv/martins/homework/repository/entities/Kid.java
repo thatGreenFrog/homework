@@ -15,11 +15,17 @@ public class Kid {
     @Column(name = "ticket_number")
     private String ticketNumber;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    private PlaySiteKid playSite;
+    @Column(name = "play_site_id")
+    private Long playSiteId;
+
+    @Column(name = "spot_in_queue")
+    private Integer spotInQueue;
 
     private Integer age;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "play_site_id", insertable = false, updatable = false)
+    private PlaySite playSite;
 
     public Long getId() {
         return id;
@@ -53,11 +59,28 @@ public class Kid {
         this.age = age;
     }
 
-    public PlaySiteKid getPlaySite() {
+    public Long getPlaySiteId() {
+        return playSiteId;
+    }
+
+    public void setPlaySiteId(Long playSiteId) {
+        this.playSiteId = playSiteId;
+    }
+
+    public Integer getSpotInQueue() {
+        return spotInQueue;
+    }
+
+    public void setSpotInQueue(Integer spotInQueue) {
+        this.spotInQueue = spotInQueue;
+    }
+
+    public PlaySite getPlaySite() {
         return playSite;
     }
 
-    public void setPlaySite(PlaySiteKid playSite) {
+    public void setPlaySite(PlaySite playSite) {
         this.playSite = playSite;
     }
+
 }

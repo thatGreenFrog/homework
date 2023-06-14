@@ -1,6 +1,7 @@
 package lv.martins.homework.controller;
 
 import lv.martins.homework.exceptions.ConflictException;
+import lv.martins.homework.exceptions.CustomException;
 import lv.martins.homework.service.KidService;
 import lv.martins.homework.service.dto.KidDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class KidController {
     }
 
     @PostMapping(path = "/playSite/{playSiteId}/kid")
-    public ResponseEntity<Object> addKidToPlaySite(@RequestBody KidDTO kid, @PathVariable("playSiteId") Long playSiteId) throws ConflictException {
+    public ResponseEntity<Object> addKidToPlaySite(@RequestBody KidDTO kid, @PathVariable("playSiteId") Long playSiteId) throws CustomException {
         return ResponseEntity.created(ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/kid/{id}")
                 .buildAndExpand(kidService.addKidToPlaySite(kid, playSiteId))

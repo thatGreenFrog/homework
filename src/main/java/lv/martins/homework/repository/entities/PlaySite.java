@@ -18,9 +18,9 @@ public class PlaySite {
     @JoinColumn(name = "play_site_id")
     private Set<PlaySiteAttraction> playSiteAttractions;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "play_site_id")
-    private Set<PlaySiteKid> playSiteKids;
+    private Set<Kid> kids;
 
     public PlaySite() {
     }
@@ -52,5 +52,13 @@ public class PlaySite {
 
     public void setPlaySiteAttractions(Set<PlaySiteAttraction> playSiteAttractions) {
         this.playSiteAttractions = playSiteAttractions;
+    }
+
+    public Set<Kid> getKids() {
+        return kids;
+    }
+
+    public void setKids(Set<Kid> kids) {
+        this.kids = kids;
     }
 }

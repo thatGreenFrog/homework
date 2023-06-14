@@ -3,12 +3,10 @@ package lv.martins.homework.service.impl;
 import lv.martins.homework.exceptions.ConflictException;
 import lv.martins.homework.repository.KidRepository;
 import lv.martins.homework.repository.PlaySiteAttractionRepository;
-import lv.martins.homework.repository.PlaySiteKidRepository;
 import lv.martins.homework.repository.PlaySiteRepository;
 import lv.martins.homework.repository.entities.Kid;
 import lv.martins.homework.repository.entities.PlaySite;
 import lv.martins.homework.repository.entities.PlaySiteAttraction;
-import lv.martins.homework.repository.entities.PlaySiteKid;
 import lv.martins.homework.service.PlaySiteService;
 import lv.martins.homework.service.dto.AttractionDTO;
 import lv.martins.homework.service.dto.AttractionType;
@@ -28,17 +26,13 @@ public class PlaySiteServiceImpl implements PlaySiteService {
 
     private final KidRepository kidRepository;
 
-    private final PlaySiteKidRepository playSiteKidRepository;
-
     @Autowired
     public PlaySiteServiceImpl(PlaySiteRepository playSiteRepository,
                                PlaySiteAttractionRepository playSiteAttractionRepository,
-                               KidRepository kidRepository,
-                               PlaySiteKidRepository playSiteKidRepository) {
+                               KidRepository kidRepository) {
         this.playSiteRepository = playSiteRepository;
         this.playSiteAttractionRepository = playSiteAttractionRepository;
         this.kidRepository = kidRepository;
-        this.playSiteKidRepository = playSiteKidRepository;
     }
 
     @Override
