@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\":\"Test play site 1\",\n    \"attractions\":[\n        {\n            \"attractionType\":\"DOUBLE_SWING\",\n            \"size\": 5\n        },\n        {\n            \"attractionType\":\"SLIDE\",\n            \"size\": 5\n        }\n    ]\n}",
+					"raw": "{\n    \"name\":\"Test play site 4\",\n    \"attractions\":[\n        {\n            \"attractionType\":\"DOUBLE_SWING\",\n            \"size\": 1\n        },\n        {\n            \"attractionType\":\"SLIDE\",\n            \"size\": 1\n        }\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -38,7 +38,18 @@
 			"name": "GET /playSite",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/playSite",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playSite"
+					]
+				}
 			},
 			"response": []
 		},
@@ -46,7 +57,51 @@
 			"name": "GET /playSite/{playSiteId}",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/playSite/:playSiteId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playSite",
+						":playSiteId"
+					],
+					"variable": [
+						{
+							"key": "playSiteId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /playSite/{playSiteId}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/playSite/:playSiteId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playSite",
+						":playSiteId"
+					],
+					"variable": [
+						{
+							"key": "playSiteId",
+							"value": "1"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -57,7 +112,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\":\"Jhon Doe\",\n    \"age\":10,\n    \"ticketNumber\":\"T123\"\n}",
+					"raw": "{\n    \"name\":\"Jhon Doe\",\n    \"age\":10,\n    \"ticketNumber\":\"T128\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -109,7 +164,25 @@
 			"name": "GET /kid/{kidId}",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/kid/:kidId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"kid",
+						":kidId"
+					],
+					"variable": [
+						{
+							"key": "kidId",
+							"value": "1"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -117,7 +190,26 @@
 			"name": "GET /playSite/{playSiteId}/kid",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/playSite/:playSiteId/kid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playSite",
+						":playSiteId",
+						"kid"
+					],
+					"variable": [
+						{
+							"key": "playSiteId",
+							"value": "1"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -146,7 +238,7 @@
 						},
 						{
 							"key": "kidId",
-							"value": "2"
+							"value": "1"
 						}
 					]
 				}
@@ -157,7 +249,19 @@
 			"name": "GET /playSite/statistics",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/playSite/statistics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"playSite",
+						"statistics"
+					]
+				}
 			},
 			"response": []
 		}
