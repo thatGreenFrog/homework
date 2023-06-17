@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PlaySiteAttractionRepository extends JpaRepository<PlaySiteAttraction, Long> {
+
+    void deleteByPlaySiteId(Long playSiteId);
+
 }

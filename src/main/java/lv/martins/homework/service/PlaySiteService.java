@@ -17,4 +17,6 @@ public interface PlaySiteService {
 
     PlaySiteStatisticsDTO getPlaySiteStatistics();
 
+    void deletePlaySite(Long playSiteId) throws NotFoundException;
+
 }

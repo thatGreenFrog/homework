@@ -2,6 +2,7 @@ package lv.martins.homework.service.impl;
 
 import lv.martins.homework.exceptions.ConflictException;
 import lv.martins.homework.exceptions.NotFoundException;
+import lv.martins.homework.repository.KidRepository;
 import lv.martins.homework.repository.PlaySiteAttractionRepository;
 import lv.martins.homework.repository.PlaySiteRepository;
 import lv.martins.homework.repository.entities.PlaySite;
@@ -13,6 +14,7 @@ import lv.martins.homework.service.dto.PlaySiteDTO;
 import lv.martins.homework.service.dto.PlaySiteStatisticsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,12 +45,16 @@ public class PlaySiteServiceImpl implements PlaySiteService {
 
     private final PlaySiteAttractionRepository playSiteAttractionRepository;
 
+    private final KidRepository kidRepository;
+
     @Autowired
-    public PlaySiteServiceImpl(PlaySiteRepository playSiteRepository,
-                               PlaySiteAttractionRepository playSiteAttractionRepository) {
+    public PlaySiteServiceImpl(PlaySiteRepository playSiteRepository, PlaySiteAttractionRepository playSiteAttractionRepository, KidRepository kidRepository) {
         this.playSiteRepository = playSiteRepository;
         this.playSiteAttractionRepository = playSiteAttractionRepository;
+        this.kidRepository = kidRepository;
     }
+
+
 
     /**
      * Creates new play site with specified attractions
@@ -131,6 +137,22 @@ public class PlaySiteServiceImpl implements PlaySiteService {
                 .sum();
         Integer totalUtilization = (int)(((double)totalKidsOnSites / (double)totalPlaySiteSize) * 100);
         return new PlaySiteStatisticsDTO(totalPlaySiteSize, totalKidsOnSites, totalKidsInQueue, totalUtilization);
+    }
+
+    /**
+     * Deletes play site and all associated kids and attractions from DB.
+     * @param playSiteId play site id to be deleted
+     * @throws NotFoundException thrown if plays site with provided id does not exist
+     */
+    @Override
+    @Transactional
+    public void deletePlaySite(Long playSiteId) throws NotFoundException {
+        Optional<PlaySite> playSite = playSiteRepository.findById(playSiteId);
+        if(playSite.isEmpty())
+            throw new NotFoundException("PlaySite does not exist");
+        kidRepository.deleteByPlaySiteId(playSiteId);
+        playSiteAttractionRepository.deleteByPlaySiteId(playSiteId);
+        playSiteRepository.deleteById(playSiteId);
     }
 
     private Integer calculatePlaySiteUtilization(PlaySite p){

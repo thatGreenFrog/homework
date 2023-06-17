@@ -15,4 +15,6 @@ public interface KidRepository extends JpaRepository<Kid, Long> {
 
     Kid findFirstByOrderBySpotInQueueAsc();
 
+    void deleteByPlaySiteId(Long playSiteId);
+
 }
