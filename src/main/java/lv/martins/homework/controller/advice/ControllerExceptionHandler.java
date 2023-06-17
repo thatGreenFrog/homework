@@ -3,11 +3,10 @@ package lv.martins.homework.controller.advice;
 import lv.martins.homework.exceptions.ConflictException;
 import lv.martins.homework.exceptions.CustomException;
 import lv.martins.homework.exceptions.NotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @ControllerAdvice
@@ -38,6 +37,12 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ExceptionResponseModel> handleCustomException(CustomException e){
         return ResponseEntity.badRequest().body(new ExceptionResponseModel(e.getMessage(), e.getCode()));
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ExceptionResponseModel> handleInvalidArgumentException(MethodArgumentTypeMismatchException e){
+        return ResponseEntity.badRequest()
+                .body(new ExceptionResponseModel("Invalid argument value '%s'='%s'. Expected %s".formatted(e.getName(), e.getValue(), e.getRequiredType() == null ? "'null'" : e.getRequiredType().getSimpleName()), 4001));
     }
 
 }
