@@ -10,6 +10,7 @@ import lv.martins.homework.service.dto.PlaySiteDTO;
 import lv.martins.homework.service.dto.PlaySiteStatisticsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,7 +30,7 @@ public class PlaySiteController {
         this.kidService = kidService;
     }
 
-    @PostMapping()
+    @PostMapping(consumes = MimeTypeUtils.APPLICATION_JSON_VALUE, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> createPlaySite(@RequestBody PlaySiteDTO playSiteDTO) throws ConflictException {
         return ResponseEntity.created(
                 ServletUriComponentsBuilder
@@ -40,34 +41,34 @@ public class PlaySiteController {
                 .build();
     }
 
-    @GetMapping()
+    @GetMapping(produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public List<PlaySiteDTO> getAll(){
         return playSiteService.getAll();
     }
 
-    @GetMapping("/{playSiteId}")
+    @GetMapping(value = "/{playSiteId}", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public PlaySiteDTO findById(@PathVariable("playSiteId") Long playSiteId) throws NotFoundException {
         return playSiteService.findById(playSiteId);
     }
 
-    @GetMapping("/statistics")
+    @GetMapping(value = "/statistics", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public PlaySiteStatisticsDTO getPlaySiteStatistics(){
         return playSiteService.getPlaySiteStatistics();
     }
 
-    @GetMapping("/{playSiteId}/kid")
+    @GetMapping(value = "/{playSiteId}/kid", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public List<KidDTO> findAllKidsByPlaySite(@PathVariable("playSiteId") Long playSiteId) throws NotFoundException {
         return kidService.findByPlaySiteId(playSiteId);
     }
 
-    @DeleteMapping("/{playSiteId}/kid/{kidId}")
+    @DeleteMapping(value = "/{playSiteId}/kid/{kidId}", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> removeKidFromPlaySite(@PathVariable("playSiteId") Long playSiteId,
                                                         @PathVariable("kidId") Long kidId) throws NotFoundException {
         kidService.removeKidPromPlaySite(playSiteId, kidId);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(path = "/{playSiteId}/kid")
+    @PostMapping(value = "/{playSiteId}/kid", consumes = MimeTypeUtils.APPLICATION_JSON_VALUE, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> addKidToPlaySite(@RequestBody KidDTO kid, @PathVariable("playSiteId") Long playSiteId) throws CustomException {
         return ResponseEntity.created(ServletUriComponentsBuilder
                         .fromCurrentContextPath().path("/kid/{id}")
@@ -76,7 +77,7 @@ public class PlaySiteController {
                 .build();
     }
 
-    @DeleteMapping("/{playSiteId}")
+    @DeleteMapping(value = "/{playSiteId}", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> deletePlaySite(@PathVariable("playSiteId") Long playSiteId) throws NotFoundException {
         playSiteService.deletePlaySite(playSiteId);
         return ResponseEntity.noContent().build();

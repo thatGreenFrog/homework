@@ -4,6 +4,7 @@ import lv.martins.homework.exceptions.NotFoundException;
 import lv.martins.homework.service.KidService;
 import lv.martins.homework.service.dto.KidDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,12 +20,12 @@ public class KidController {
         this.kidService = kidService;
     }
 
-    @GetMapping()
+    @GetMapping(produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public List<KidDTO> findAllKids(){
         return kidService.findAllKids();
     }
 
-    @GetMapping("/{kidId}")
+    @GetMapping(value = "/{kidId}", produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
     public KidDTO findById(@PathVariable("kidId") Long kidId) throws NotFoundException {
         return kidService.findById(kidId);
     }
